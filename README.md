@@ -2,22 +2,27 @@
 
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![FedRAMP](https://img.shields.io/badge/FedRAMP-High-red.svg)](https://www.fedramp.gov/)
-[![Azure](https://img.shields.io/badge/Azure-Compliant-0078D4?logo=microsoft-azure)](https://azure.microsoft.com/)
+[![Azure](https://img.shields.io/badge/Azure-Governance-0078D4?logo=microsoft-azure)](https://azure.microsoft.com/)
 [![Maintained](https://img.shields.io/badge/Maintained-Yes-brightgreen.svg)](https://github.com/mhartson310/FedRAMP-Azure-Toolkit)
 
-Automate 60% of FedRAMP High controls with production-tested Terraform, PowerShell, and Azure Policy code.
-
-**Based on 3 real FedRAMP High authorizations** for DoD, Intelligence Community, and Civilian agencies.
+A practical Azure compliance-as-code toolkit for implementing and evidencing selected FedRAMP High control patterns with Terraform, PowerShell, Azure Policy, KQL, and Microsoft Sentinel.
 
 📖 **[Read the complete FedRAMP guide →](https://mhartson.com/insights/fedramp-high-azure)**
 
 ---
 
-## 🎯 What This Is
+## What this demonstrates
 
-**Real automation code** for the hardest FedRAMP High controls - the ones that always fail on first assessment.
+- translating regulatory requirements into technical Azure controls;
+- compliance-as-code with Terraform, Azure Policy, PowerShell, and KQL;
+- evidence collection and continuous-monitoring design;
+- mapping identity, logging, boundary protection, monitoring, and data controls to implementation artifacts;
+- separating technical control implementation from authorization and assessment;
+- building repeatable governance patterns for regulated Azure environments.
 
-Not theoretical compliance checkboxes. This is what I actually deployed for $1M+ FedRAMP projects.
+## What this is
+
+A reference toolkit for several high-friction FedRAMP High control areas. It is designed to make the implementation and evidence path concrete while keeping the boundary clear between **technical automation** and **formal authorization**.
 
 ---
 
@@ -27,7 +32,7 @@ Not theoretical compliance checkboxes. This is what I actually deployed for $1M+
 
 - ✅ Automates control implementation
 - ✅ Generates evidence artifacts
-- ✅ Reduces manual effort by 60%
+- ✅ Reduces repetitive manual implementation and evidence work
 - ❌ Does NOT replace 3PAO assessment
 - ❌ Does NOT guarantee ATO
 - ❌ Does NOT replace compliance expertise
@@ -44,7 +49,7 @@ Not theoretical compliance checkboxes. This is what I actually deployed for $1M+
 
 ## 📦 What's Included
 
-### Automated Controls (The 7 That Always Fail)
+### Selected control areas
 
 | Control | Name | Automation Type | Evidence Generated |
 |---------|------|----------------|-------------------|
@@ -156,11 +161,11 @@ This generates:
 
 ---
 
-## 🔐 The 7 Controls That Always Fail
+## Selected FedRAMP control patterns
 
 ### Control 1: AC-2 (Account Management)
 
-**Why it fails:**
+**Common implementation gaps:**
 - No automated provisioning/deprovisioning
 - No 90-day account reviews
 - Orphaned accounts from former employees
@@ -185,7 +190,7 @@ This generates:
 
 ### Control 2: AU-2 (Audit Events)
 
-**Why it fails:**
+**Common implementation gaps:**
 - Not logging all required NIST 800-53 events
 - Logs scattered across 40+ Azure services
 - No proof of log integrity
@@ -208,7 +213,7 @@ terraform -chdir=./control-automation/AU-2-audit-logging apply
 
 ### Control 3: CM-7 (Least Functionality)
 
-**Why it fails:**
+**Common implementation gaps:**
 - Default Azure VM images have 50+ unnecessary services
 - No documented approved software baseline
 - Developers install unapproved software
@@ -230,7 +235,7 @@ terraform -chdir=./control-automation/CM-7-least-functionality apply
 
 ### Control 4: SC-7 (Boundary Protection)
 
-**Why it fails:**
+**Common implementation gaps:**
 - Firewall in "audit mode" (doesn't block)
 - No application-layer inspection
 - No TLS decryption
@@ -253,7 +258,7 @@ terraform -chdir=./control-automation/SC-7-boundary-protection apply
 
 ### Control 5: IA-2 (Identification & Authentication)
 
-**Why it fails:**
+**Common implementation gaps:**
 - MFA only for admins (requirement: ALL users)
 - SMS-based MFA (not phishing-resistant)
 - No PIV/CAC support
@@ -278,7 +283,7 @@ terraform -chdir=./control-automation/SC-7-boundary-protection apply
 
 ### Control 6: SI-4 (Information System Monitoring)
 
-**Why it fails:**
+**Common implementation gaps:**
 - Alerts configured but no one responds
 - No defined incident response time
 - Can't prove monitoring is happening
@@ -301,7 +306,7 @@ terraform -chdir=./control-automation/SI-4-monitoring apply
 
 ### Control 7: SI-12 (Information Handling and Retention)
 
-**Why it fails:**
+**Common implementation gaps:**
 - No data classification labels
 - PII/CUI mixed with non-sensitive data
 - Can't prove proper disposal
@@ -325,36 +330,11 @@ terraform -chdir=./control-automation/SI-12-information-handling apply
 
 ---
 
-## 💰 Cost Impact
+## Scope and implementation reality
 
-**Without automation:**
-- Implementation: 18-24 months
-- Budget: $1.2M-$2.1M
-- Annual operating: $800k-$1.2M
+The amount of work this toolkit can automate depends on the system boundary, inherited controls, agency requirements, existing Azure platform maturity, evidence expectations, and assessment approach.
 
-**With this toolkit:**
-- Implementation: 14-18 months (save 4-6 months)
-- Budget: $900k-$1.6M (save $300k-$500k)
-- Annual operating: $600k-$900k (save $200k-$300k)
-
-**ROI:** Toolkit pays for itself (it's free) + saves $500k-$800k
-
----
-
-## 📊 What Gets Automated vs Manual
-
-| Activity | Automated | Manual | Notes |
-|----------|-----------|--------|-------|
-| **Infrastructure deployment** | ✅ 80% | ❌ 20% | Terraform handles most deployment |
-| **Evidence collection** | ✅ 70% | ❌ 30% | Scripts generate most artifacts |
-| **Documentation writing** | ❌ 10% | ✅ 90% | SSP still requires manual writing |
-| **Policy configuration** | ✅ 90% | ❌ 10% | Azure Policy automates enforcement |
-| **3PAO assessment** | ❌ 0% | ✅ 100% | Cannot be automated |
-| **Continuous monitoring** | ✅ 85% | ❌ 15% | Sentinel + Logic Apps automate |
-
-**Overall: ~60% of effort automated**
-
----
+Use the repository to accelerate repeatable technical controls and evidence collection—not to estimate authorization cost, schedule, or outcome.
 
 ## ⚠️ What This Does NOT Do
 
