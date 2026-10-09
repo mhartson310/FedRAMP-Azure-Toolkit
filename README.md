@@ -339,7 +339,7 @@ Use the repository to accelerate repeatable technical controls and evidence coll
 ## ⚠️ What This Does NOT Do
 
 **Does NOT replace:**
-- 3PAO assessment ($150k-$400k)
+- 3PAO assessment and associated assessment costs
 - System Security Plan writing (200-600 pages)
 - FedRAMP expertise and consulting
 - Compliance training for your team
