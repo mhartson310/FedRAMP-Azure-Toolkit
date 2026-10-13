@@ -4,6 +4,12 @@ Practical Azure control-automation examples focused on **account lifecycle** and
 
 > **Scope:** A partial technical reference, **not** a FedRAMP authorization package, compliance certification, complete High baseline, or substitute for a 3PAO assessment.
 
+## Automated checks
+
+[![PowerShell syntax](https://github.com/mhartson310/FedRAMP-Azure-Toolkit/actions/workflows/powershell-syntax.yml/badge.svg)](https://github.com/mhartson310/FedRAMP-Azure-Toolkit/actions/workflows/powershell-syntax.yml)
+
+PowerShell files are parsed without connecting to a tenant. **This does not attest to FedRAMP compliance, safe lifecycle automation, or successful evidence collection.**
+
 ## What this demonstrates
 
 - Translating identity and audit-control objectives into repeatable engineering workflows
