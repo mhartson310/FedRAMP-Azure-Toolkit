@@ -270,7 +270,7 @@ Review ID: AC2-$(Get-Date -Format 'yyyyMMdd')-$($ManagerEmail.Split('@')[0])
         Write-AuditLog "Notification sent to $ManagerEmail for $($accountsForManager.Count) inactive accounts"
     }
     catch {
-        Write-AuditLog "Failed to send notification to $ManagerEmail: $_" -Severity "Warning"
+        Write-AuditLog "Failed to send notification to ${ManagerEmail}: $_" -Severity "Warning"
     }
 }
 
