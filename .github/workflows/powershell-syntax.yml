@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'control-automation/**/*.ps1'
+      - 'tests/**/*.ps1'
       - '.github/workflows/powershell-syntax.yml'
   pull_request:
     paths:
@@ -37,3 +38,6 @@ jobs:
             if ($errors.Count -eq 0) { Write-Host "PASS syntax: $($file.FullName)" }
           }
           if ($failed) { throw 'PowerShell parsing failed' }
+      - name: Run synthetic review and audit inventory tests
+        shell: pwsh
+        run: ./tests/offline-policy.tests.ps1
