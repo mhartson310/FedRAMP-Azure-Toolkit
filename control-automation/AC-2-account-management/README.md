@@ -6,8 +6,8 @@ This directory demonstrates selected account-lifecycle and periodic-review logic
 
 ## Contents
 
-- [account-lifecycle.ps1](account-lifecycle.ps1) — example functions for provisioning and deprovisioning. **Live create/disable operations are deliberately blocked** until trusted approvals, credential delivery, group policy, and deletion scheduling are actually implemented and reviewed. Use `-DryRun` to inspect only.
-- [90-day-review.ps1](90-day-review.ps1) — review workflow prototype. **Manager notifications may be attempted** if explicitly enabled; treat recipient mapping, Graph permissions, timing, report completeness, and sign-in fields as unvalidated until tested in an isolated tenant.
+- [account-lifecycle.ps1](account-lifecycle.ps1) — example functions for provisioning and deprovisioning. **Live create/disable operations are deliberately blocked** until trusted approvals, credential delivery, group policy, and deletion scheduling are actually implemented and reviewed. The script's entry point intentionally makes no Graph connection or changes; its functions are design references, not a usable provisioning service.
+- [90-day-review.ps1](90-day-review.ps1) — review workflow prototype. **Read-only candidate review only.** Notifications are explicitly rejected; no accounts are disabled. Missing sign-in data stays `INSUFFICIENT_DATA` and is never treated as proven inactivity.
 - [collect-evidence.ps1](collect-evidence.ps1) — evidence collection example. Any output must be independently reviewed.
 
 ## Before any real tenant execution
@@ -23,6 +23,6 @@ This directory demonstrates selected account-lifecycle and periodic-review logic
 
 ## Verification
 
-CI parses PowerShell sources without connecting to any tenant. Parsing does not establish Graph compatibility, correct outcomes, or successful audit evidence.
+CI parses the scripts **and runs synthetic classification tests** for recent, old, missing, future, and disabled-user activity. These are offline logic tests and do not establish Graph compatibility, production automation, or FedRAMP compliance. See [offline tests](../../tests/offline-policy.tests.ps1).
 
 [Parent scope statement](../../README.md)
