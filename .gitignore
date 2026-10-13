@@ -1,0 +1,23 @@
+# Never commit collected identity/account data or audit exports
+**/evidence/
+**/reports/
+*.csv
+*.xlsx
+*.jsonl
+*.log
+*.tmp
+
+# Credentials / local environments
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+secrets.json
+credentials.json
+
+# IDE / operating system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
