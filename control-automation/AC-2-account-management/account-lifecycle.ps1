@@ -257,7 +257,7 @@ function Disable-ManagedUserAccount {
         return $true
     }
     catch {
-        Write-AuditLog "Failed to disable account $UserPrincipalName: $_" -Severity "Error"
+        Write-AuditLog "Failed to disable account ${UserPrincipalName}: $_" -Severity "Error"
         return $false
     }
 }
