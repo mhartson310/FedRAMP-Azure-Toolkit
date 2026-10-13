@@ -296,24 +296,12 @@ function Set-AccountDeletionSchedule {
     # Implementation depends on your scheduling system
 }
 
-# Main execution
+# Main execution deliberately performs no Microsoft Graph connection or writes.
+# Reference functions above require additional design and separate validation.
 function Main {
-    Write-AuditLog "Starting account lifecycle management for $Environment environment"
-    
-    if (-not (Connect-MgGraphWithRetry)) {
-        Write-AuditLog "Exiting due to connection failure" -Severity "Error"
-        exit 1
-    }
-    
-    Write-AuditLog "Account lifecycle automation configured successfully" -Severity "Information"
-    Write-AuditLog "Configuration: $($envConfig | ConvertTo-Json -Compress)"
-    
-    # Example: Process pending account requests from HR system
-    # This would integrate with your HR system API
-    # For demo purposes, showing the structure
-    
-    Write-AuditLog "Account lifecycle management setup complete"
+    Write-Host 'AC-2 lifecycle reference only. NO accounts created, disabled, or scheduled.' -ForegroundColor Yellow
+    Write-Host 'Live lifecycle operations are blocked pending validated approval, credential-delivery, and HR integration.'
+    Write-Host "Environment: $Environment"
 }
 
-# Run main function
 Main
