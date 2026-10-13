@@ -17,6 +17,10 @@ Requires `Az.Accounts`, `Az.OperationalInsights`, and workspace read permissions
 
 The output lists the selected workspace, its reported retention setting, and explicit false/unverified status for ingestion coverage, per-table retention, immutability, and control acceptance.
 
+## Automated regression checks
+
+The [offline test suite](../../tests/offline-policy.tests.ps1) confirms that sample workspaces never produce a compliance attestation, regardless of retention, and that missing evidence stays unverified. These checks do not contact Azure.
+
 ## Additional evidence needed for real assessments
 
 - Define required event types, sources, and organizational NIST/FedRAMP control interpretation.
