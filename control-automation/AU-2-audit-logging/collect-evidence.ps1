@@ -20,6 +20,7 @@ param(
     [Parameter()]
     [string]$Month = (Get-Date -Format "yyyy-MM")
 )
+. (Join-Path $PSScriptRoot "AuditInventory.ps1")
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
@@ -32,20 +33,7 @@ if ($Month -notmatch '^\d{4}-(0[1-9]|1[0-2])$') {
 $workspace = Get-AzOperationalInsightsWorkspace -ResourceGroupName $ResourceGroupName -Name $WorkspaceName -ErrorAction Stop
 New-Item -ItemType Directory -Path $OutputPath -Force | Out-Null
 
-$report = [ordered]@{
-    CollectedUtc             = (Get-Date).ToUniversalTime().ToString("o")
-    Month                    = $Month
-    WorkspaceName            = $workspace.Name
-    WorkspaceResourceGroup   = $ResourceGroupName
-    WorkspaceResourceId      = $workspace.ResourceId
-    WorkspaceRetentionDays   = $workspace.RetentionInDays
-    AssessmentResult         = "NOT_ASSESSED"
-    DataIngestionVerified    = $false
-    ControlCoverageVerified  = $false
-    PerTableRetentionChecked = $false
-    ImmutabilityVerified     = $false
-    Note                     = "Workspace configuration inventory only. No control compliance claims."
-}
+$report = New-AuditWorkspaceInventory -Workspace $workspace -ResourceGroupName $ResourceGroupName -Month $Month -CollectedUtc ([DateTimeOffset]::UtcNow)
 $filename = Join-Path $OutputPath "au2-workspace-inventory-$Month.json"
 ConvertTo-Json -InputObject $report -Depth 4 |
     Set-Content -Path $filename -Encoding UTF8
