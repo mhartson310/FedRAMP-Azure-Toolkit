@@ -173,6 +173,10 @@ function New-ManagedUserAccount {
         return $true
     }
     
+    # FAIL CLOSED: the reference does not implement independently verified manager
+    # approval or secure first-login credential delivery. Do not create accounts.
+    throw "Live provisioning is disabled in this reference. Approval and credential-delivery integrations must be implemented and tested first."
+
     try {
         $newUser = New-MgUser @userParams
         
@@ -220,6 +224,10 @@ function Disable-ManagedUserAccount {
             return $true
         }
         
+        # FAIL CLOSED: this reference does not implement a validated HR termination
+        # trigger, group exceptions, or a durable deletion schedule.
+        throw "Live deprovisioning is disabled in this reference pending approved lifecycle integrations."
+
         # Disable the account
         Update-MgUser -UserId $user.Id -AccountEnabled $false
         
@@ -271,7 +279,7 @@ function Send-WelcomeEmail {
     
     # Implementation depends on your mail system
     # Example using Microsoft Graph sendMail
-    Write-AuditLog "Welcome email sent to $UserPrincipalName"
+    throw "Welcome email integration not implemented. No email has been sent."
 }
 
 # Function: Schedule account deletion
@@ -282,7 +290,7 @@ function Set-AccountDeletionSchedule {
     )
     
     $deletionDate = (Get-Date).AddDays($Days)
-    Write-AuditLog "Account $UserId scheduled for deletion on $deletionDate"
+    throw "Account deletion scheduler not implemented. No deletion has been scheduled."
     
     # Store in database or scheduled task
     # Implementation depends on your scheduling system
