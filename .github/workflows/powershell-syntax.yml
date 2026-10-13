@@ -1,0 +1,39 @@
+name: Compliance Reference PowerShell Syntax
+
+on:
+  push:
+    paths:
+      - 'control-automation/**/*.ps1'
+      - '.github/workflows/powershell-syntax.yml'
+  pull_request:
+    paths:
+      - 'control-automation/**/*.ps1'
+      - '.github/workflows/powershell-syntax.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse sources only - never connect or modify a tenant
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $files = @(Get-ChildItem -Recurse control-automation -Filter '*.ps1')
+          if ($files.Count -eq 0) { throw 'Expected PowerShell references were not found' }
+          $failed = $false
+          foreach ($file in $files) {
+            $tokens = $null
+            $errors = $null
+            [void][System.Management.Automation.Language.Parser]::ParseFile($file.FullName, [ref]$tokens, [ref]$errors)
+            foreach ($e in $errors) {
+              Write-Host "ERROR: $($file.FullName):$($e.Extent.StartLineNumber) $($e.Message)"
+              $failed = $true
+            }
+            if ($errors.Count -eq 0) { Write-Host "PASS syntax: $($file.FullName)" }
+          }
+          if ($failed) { throw 'PowerShell parsing failed' }
